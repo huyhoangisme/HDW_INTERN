@@ -1,9 +1,12 @@
+import { Header } from 'components/common';
+import { SlideBar } from 'features/dashboard';
 
-export interface AdminLayoutProps {
-
-}
+export interface AdminLayoutProps {}
 export const AdminLayout = (props: AdminLayoutProps) => {
-    return (
-        <div>Admin</div>
-    )
- }
+	return (
+		<>
+			<Header />
+			<SlideBar />
+		</>
+	);
+};

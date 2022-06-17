@@ -2,7 +2,7 @@ import { ListParams, ListResponse, Student } from 'models';
 import axios from './axios';
 
 const studentApi = {
-	getALLStudent(params: ListParams): Promise<ListResponse<Student>> {
+	getAllStudent(params: ListParams): Promise<ListResponse<Student>> {
 		const url = '/students';
 		return axios.get(url, 
 			{params}

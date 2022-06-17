@@ -27,7 +27,7 @@ Content-Type: application/json
 ###
 
 # @name updateStudent
-PATCH {{baseUrl}}/students/u6V7vww
+PATCH {{baseUrl}}/students/sktwi1cgkkuif36f9
 Content-Type: application/json
 
 {
@@ -37,4 +37,4 @@ Content-Type: application/json
 ###
 
 # @name removeStudent
-DELETE {{baseUrl}}/students/u6V7vww
+DELETE {{baseUrl}}/students/sktwi1cgkkuif36fa

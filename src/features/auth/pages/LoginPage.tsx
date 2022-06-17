@@ -12,16 +12,11 @@ export const LoginPage = (props: LoginPageProps) => {
 		);
 		
 	};
-	let handleLogout = () => {
-		dispatch(authActions.logOut());
-	};
+	
 	return (
-		<div className="container">
-			<h1>Student Login</h1>
-			<button onClick={() => handleLogin()}>Login</button>
-			<div>
-				<button onClick={() => handleLogout()}>Logout</button>
-			</div>
+		<div className="container flex  flex-col justify-center items-center px-6">
+			<h1 className = "text-center text-4xl text-bold py-4">Student Login</h1>
+			<button onClick={() => handleLogin()} className=" bg-pink-700 px-4 text-xl w-fit ">Login</button>
 		</div>
 	);
 };

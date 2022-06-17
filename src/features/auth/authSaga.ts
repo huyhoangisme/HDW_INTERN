@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { authActions, PayLoadState } from './authSlice';
-import { push } from 'react-router-redux';    
 export function* handleLogin(payload: PayLoadState) {
 	try {
 		// call api login;
@@ -13,7 +12,6 @@ export function* handleLogin(payload: PayLoadState) {
 				email: 'absc',
 			})
 		);
-		yield put(push('/admin'))
 	} catch (error: any) {
 		yield put(authActions.loginFailed(error.message));
 		return false;
@@ -22,7 +20,6 @@ export function* handleLogin(payload: PayLoadState) {
 export function* handleLogOut() {
 	localStorage.removeItem('accessToken');
 	yield put(authActions.logOut);
-	yield put( push('/login'))
 }
 function* handleLoginFlow() {
 	while (true) {
