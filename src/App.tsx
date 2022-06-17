@@ -1,21 +1,30 @@
-import studentApi from 'api/studentApi';
+import { useAppSelector } from 'app/hooks';
 import { NotFound, PrivateRoute } from 'components/common';
+import { AdminLayout } from 'components/layout';
 import { LoginPage } from 'features/auth/pages/LoginPage';
 import { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 
 function App() {
+	const loginSucess = useAppSelector((state) => state.auth.isLoggedIn);
+	const history = useHistory();
 	useEffect(() => {
-		studentApi.getStudentById('sktwi1cgkkuif36f5').then((student) => console.log(student));
-	}, []);
+		if (loginSucess) {
+			history.push('/admin');
+		}
+		
+	}, [loginSucess]);
 	return (
 		<div className="App">
+
 			<Switch>
-				<Route path="/login">
+				<Route path="/login" exact>
 					<LoginPage />
 				</Route>
-				<PrivateRoute path="/admin"></PrivateRoute>
+				<PrivateRoute path="/admin">
+					<AdminLayout />
+				</PrivateRoute>
 				<Route>
 					<NotFound />
 				</Route>

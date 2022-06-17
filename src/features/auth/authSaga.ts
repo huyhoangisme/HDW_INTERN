@@ -1,25 +1,28 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, fork, put, take } from 'redux-saga/effects';
 import { authActions, PayLoadState } from './authSlice';
-
-function* handleLogin(payload: PayLoadState) {
+import { push } from 'react-router-redux';    
+export function* handleLogin(payload: PayLoadState) {
 	try {
 		// call api login;
-		localStorage.setItem("accessToken",'ânfafnfan');
-		yield put(authActions.loginSucces({
-			id:1,
-			name:'Hoang',
-			email:'absc'
-		}))
-	}catch (error:any) {
+		localStorage.setItem('accessToken', 'ânfafnfan');
+		yield put(
+			authActions.loginSucces({
+				id: 1,
+				name: 'Hoang',
+				email: 'absc',
+			})
+		);
+		yield put(push('/admin'))
+	} catch (error: any) {
 		yield put(authActions.loginFailed(error.message));
+		return false;
 	}
-
 }
-function* handleLogOut() {
-	localStorage.removeItem("accessToken");
+export function* handleLogOut() {
+	localStorage.removeItem('accessToken');
 	yield put(authActions.logOut);
-	
+	yield put( push('/login'))
 }
 function* handleLoginFlow() {
 	while (true) {

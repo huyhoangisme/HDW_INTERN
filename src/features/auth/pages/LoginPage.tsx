@@ -10,6 +10,7 @@ export const LoginPage = (props: LoginPageProps) => {
 				password: '',
 			})
 		);
+		
 	};
 	let handleLogout = () => {
 		dispatch(authActions.logOut());

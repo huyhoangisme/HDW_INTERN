@@ -42,8 +42,8 @@ export const authSlice = createSlice({
 // actions
 export const authActions = authSlice.actions;
 // selector
-export const authSelectorLoginedIn = (state: any) => state.isLoggedIn;
-export const authSelectorUserInfo = (state: any) => state.userInfo;
+export const authSelectorLoginedIn = (state: authState) => state.isLoggedIn;
+export const authSelectorUserInfo = (state: authState) => state.userInfo;
 // reducers
 
 const authReducer = authSlice.reducer;
