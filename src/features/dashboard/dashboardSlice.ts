@@ -50,6 +50,7 @@ const dashboardSlice = createSlice({
 			});
 			state.studentList = studentListCopy;
 		},
+		
 	},
 });
 

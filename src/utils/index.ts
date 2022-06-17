@@ -1,1 +1,2 @@
-export * from './history'
+export * from './emitter';
+export * from './history';

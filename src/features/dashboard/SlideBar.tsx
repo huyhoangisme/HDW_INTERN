@@ -17,7 +17,7 @@ export const SlideBar = (props: SlideBarProps) => {
 					<div className="cursor-pointer py-1" onClick={() => handleClickDashboard()}>Dashboard</div>
 				</NavLink>
 				<NavLink to="/admin/student" activeClassName="text-indigo-600">
-					<div className="cursor-pointer py-1">Students</div>
+					<div className="cursor-pointer py-1 ">Students</div>
 				</NavLink>
 			</div>
 			<div className="col-start-2 col-end-7">

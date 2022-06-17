@@ -2,21 +2,30 @@ import studentApi from 'api/studentApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Student } from 'models';
 import { useEffect, useState } from 'react';
+import { emitter } from 'utils';
 import { dashboardActions } from './dashboardSlice';
+import { UpdateStudent } from './UpdateStudent';
 
 export interface DashBoardProps {}
 export const DashBoard = (props: DashBoardProps) => {
 	const dispatch = useAppDispatch();
 	const [studentList, setStudentList] = useState<Student[]>([]);
+	const [isOpen,setIsOpen] = useState<boolean>(false);
 	const studentLists: Student[] = useAppSelector((state) => state.dashboard.studentList);
 	useEffect(() => {
 		setStudentList(studentLists);
 	}, [studentLists]);
 
-	let handleDeleteStudent = async(student:Student) => {
-		await studentApi.removeStudent(student.id)
+	let handleDeleteStudent = async (student: Student) => {
+		await studentApi.removeStudent(student.id);
 		dispatch(dashboardActions.deleteStudentList(student));
-		
+	};
+	let tonggle = () => {
+		setIsOpen(!isOpen);
+	}
+	let handleUpdateStudent = async (student: Student) => {
+		setIsOpen(true);
+		emitter.emit('EVENT_UPDATE_STUDENT',student);
 	};
 	return (
 		<div className="container px-6 mt-10">
@@ -47,7 +56,10 @@ export const DashBoard = (props: DashBoardProps) => {
 										>
 											Delete
 										</button>
-										<button className="px-3 border border-solid bg-yellow-500 rounded">
+										<button
+											className="px-3 border border-solid bg-yellow-500 rounded"
+											onClick={() => handleUpdateStudent(student)}
+										>
 											Update
 										</button>
 									</td>
@@ -56,6 +68,7 @@ export const DashBoard = (props: DashBoardProps) => {
 						})}
 				</tbody>
 			</table>
+			<UpdateStudent isOpen = {isOpen} tonggle = {tonggle} />
 		</div>
 	);
 };

@@ -18,7 +18,7 @@ const studentApi = {
 	},
 	updateStudent(id: string, data: Student): Promise<Student> {
 		const url = `/students/${id}`;
-		return axios.put(url, { data: data });
+		return axios.put(url, data);
 	},
 	removeStudent(id: string): Promise<Boolean> {
 		const url = `/students/${id}`;
