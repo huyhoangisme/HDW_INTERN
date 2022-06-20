@@ -8,7 +8,7 @@ GET {{baseUrl}}/students?_page=1&_limit=10
 ###
 
 # @name getStudentById
-GET {{baseUrl}}/students/Michale Test
+GET {{baseUrl}}/students/sktwi1cgkkuif36fc
 
 ###
 
@@ -38,4 +38,4 @@ Content-Type: application/json
 ###
 
 # @name removeStudent
-DELETE {{baseUrl}}/students/sktwi1cgkkuif36fa
+DELETE {{baseUrl}}/students/sktwi1cgkkuif36f6

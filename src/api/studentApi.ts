@@ -20,7 +20,7 @@ const studentApi = {
 		const url = `/students/${id}`;
 		return axios.put(url, data);
 	},
-	removeStudent(id: string): Promise<Boolean> {
+	removeStudent(id: string) {
 		const url = `/students/${id}`;
 		return axios.delete(url);
 	},

@@ -12,7 +12,7 @@ function App() {
 	const history = useHistory();
 	useEffect(() => {
 		if (loginSucess || accessToken) {
-			history.push('/admin');
+			history.push('/admin/dashboard');
 		}
 	}, [loginSucess, accessToken]);
 	return (

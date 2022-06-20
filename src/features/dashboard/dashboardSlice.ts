@@ -8,49 +8,38 @@ export interface dashboardStatics {
 
 export interface dashboardState {
 	loading: boolean;
-	statics: dashboardStatics;
-	highestStudentList: Student[];
 	studentList: Student[];
 }
 const intialState: dashboardState = {
 	loading: false,
-	statics: {
-		maleCount: 0,
-		femaleCount: 0,
-	},
-	highestStudentList: [],
 	studentList: [],
 };
 const dashboardSlice = createSlice({
 	name: 'dashboard',
 	initialState: intialState,
 	reducers: {
-		fetchData(state) {
+		getAllStudentStart(state) {
 			state.loading = true;
 		},
-		fetchDataSuccess(state) {
-			state.loading = false;
-		},
-		fetchDataFailded(state) {
-			state.loading = false;
-		},
-		setStatics(state, action: PayloadAction<dashboardStatics>) {
-			state.statics = action.payload;
-		},
-		setHighestStudentList(state, action: PayloadAction<Student[]>) {
-			state.highestStudentList = action.payload;
-		},
-		setStudentList(state, action: PayloadAction<Student[]>) {
+		getAllStudentSuccess(state, action: PayloadAction<Student[]>) {
 			state.studentList = action.payload;
 		},
-		deleteStudentList(state, action: PayloadAction<Student>) {
-			let studentListCopy = state.studentList;
-			studentListCopy = studentListCopy.filter((student) => {
-				return student.id !== action.payload.id;
-			});
-			state.studentList = studentListCopy;
+		getAllStudentFailed(state) {
+			state.loading = false;
 		},
-		
+
+		deleteStudentStart(state, action: PayloadAction<String>) {
+			state.loading = true;
+		},
+		deleteStudentSuccess(state, action: PayloadAction<String>) {
+			state.loading = false;
+			state.studentList = state.studentList.filter((student) => {
+				return student.id !== action.payload;
+			});
+		},
+		deleteStudentFailed(state) {
+			state.loading = false;
+		},
 	},
 });
 

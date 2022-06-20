@@ -46,7 +46,6 @@ export const UpdateStudent = ({ isOpen, tonggle }: UpdateStudentProps) => {
 	let handleUpdateStudent = async (id: string) => {
 		console.log(id, student);
 		await studentApi.updateStudent(id, student as Student);
-		dispatch(dashboardActions.fetchData());
         handleToggle();
 	};
 	return (

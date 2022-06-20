@@ -10,22 +10,25 @@ export interface DashBoardProps {}
 export const DashBoard = (props: DashBoardProps) => {
 	const dispatch = useAppDispatch();
 	const [studentList, setStudentList] = useState<Student[]>([]);
-	const [isOpen,setIsOpen] = useState<boolean>(false);
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const studentLists: Student[] = useAppSelector((state) => state.dashboard.studentList);
 	useEffect(() => {
 		setStudentList(studentLists);
 	}, [studentLists]);
 
-	let handleDeleteStudent = async (student: Student) => {
-		await studentApi.removeStudent(student.id);
-		dispatch(dashboardActions.deleteStudentList(student));
-	};
+	useEffect(() => {
+		dispatch(dashboardActions.getAllStudentStart());
+	}, []);
 	let tonggle = () => {
 		setIsOpen(!isOpen);
-	}
+	};
+	let handleDeleteStudent = (student:Student) => {
+		dispatch(dashboardActions.deleteStudentStart(student.id));
+	};
+
 	let handleUpdateStudent = async (student: Student) => {
 		setIsOpen(true);
-		emitter.emit('EVENT_UPDATE_STUDENT',student);
+		emitter.emit('EVENT_UPDATE_STUDENT', student);
 	};
 	return (
 		<div className="container px-6 mt-10">
@@ -68,7 +71,7 @@ export const DashBoard = (props: DashBoardProps) => {
 						})}
 				</tbody>
 			</table>
-			<UpdateStudent isOpen = {isOpen} tonggle = {tonggle} />
+			<UpdateStudent isOpen={isOpen} tonggle={tonggle} />
 		</div>
 	);
 };

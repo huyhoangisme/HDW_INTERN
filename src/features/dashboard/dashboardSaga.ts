@@ -1,56 +1,37 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import studentApi from 'api/studentApi';
 import { ListParams, ListResponse, Student } from 'models';
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { dashboardActions, dashboardStatics } from './dashboardSlice';
+import { dashboardActions } from './dashboardSlice';
 
 const params: ListParams = {
 	_page: 1,
 	_limit: 10,
 };
-let handleGetAllStudent = () => {
-	return studentApi.getAllStudent(params);
-};
-let handleCountGenders = (students: Student[]) => {
-	let statics: dashboardStatics = { maleCount: 0, femaleCount: 0 };
-	if (students && students.length > 0) {
-		students.map((student) => {
-			if (student.gender === 'male') {
-				statics.maleCount++;
-			} else statics.femaleCount++;
-			return {
-				statics,
-			};
-		});
-	}
-	return statics;
-};
-function* handleFetchData() {
+
+function* handleGetAllStudent() {
 	try {
-		// call api
-		let allStudent: ListResponse<Student> = yield call(handleGetAllStudent);
-		let statics = handleCountGenders(allStudent.data);
-		yield put(dashboardActions.setStatics(statics));
-		yield put(dashboardActions.setStudentList(allStudent.data));
-		yield put(dashboardActions.fetchDataSuccess());
+		let allStudent: ListResponse<Student> = yield call(studentApi.getAllStudent, params);
+		yield put(dashboardActions.getAllStudentSuccess(allStudent.data));
 	} catch (e) {
-		yield put(dashboardActions.fetchDataFailded());
+		yield put(dashboardActions.getAllStudentFailed);
 	}
 }
 
-
-function* handleDeleteStudent() {
+function* handleDeleteStudent(action: PayloadAction<String>) {
+	// call api method to delete
 	try {
-		let allStudent: ListResponse<Student> = yield call(handleGetAllStudent);
-		yield put(dashboardActions.setStudentList(allStudent.data));
-		// deleteStudent()
+		yield call(studentApi.removeStudent, `${action.payload}`);
+		yield put(dashboardActions.deleteStudentSuccess(action.payload));
 	} catch (e) {
-		yield put(dashboardActions.fetchDataFailded());
+		yield put(dashboardActions.deleteStudentFailed);
 	}
 }
+
 function* handleDashBoardActions() {
-	yield takeEvery(dashboardActions.fetchData.type, handleFetchData);
+	yield takeEvery(dashboardActions.getAllStudentStart.type, handleGetAllStudent);
+	yield takeEvery(dashboardActions.deleteStudentStart.type, handleDeleteStudent);
 }
 export default function* dashboardSaga() {
 	yield call(handleDashBoardActions);
-	yield call(handleDeleteStudent);
 }

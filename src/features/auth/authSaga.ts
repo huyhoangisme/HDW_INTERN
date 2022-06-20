@@ -4,7 +4,7 @@ import { authActions, PayLoadState } from './authSlice';
 export function* handleLogin(payload: PayLoadState) {
 	try {
 		// call api login;
-		localStorage.setItem('accessToken', 'ânfafnfan');
+		localStorage.setItem('accessToken', 'abcxyz');
 		yield put(
 			authActions.loginSucces({
 				id: 1,
@@ -12,7 +12,7 @@ export function* handleLogin(payload: PayLoadState) {
 				email: 'absc',
 			})
 		);
-	} catch (error: any) {
+	} catch (error:any) {
 		yield put(authActions.loginFailed(error.message));
 		return false;
 	}
