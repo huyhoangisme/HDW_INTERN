@@ -1,43 +1,41 @@
-import studentApi from 'api/studentApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Student } from 'models';
 import { useEffect, useState } from 'react';
-import { emitter } from 'utils';
+import { Link, NavLink } from 'react-router-dom';
 import { dashboardActions } from './dashboardSlice';
-import { UpdateStudent } from './UpdateStudent';
 
 export interface DashBoardProps {}
 export const DashBoard = (props: DashBoardProps) => {
 	const dispatch = useAppDispatch();
 	const [studentList, setStudentList] = useState<Student[]>([]);
-	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const studentLists: Student[] = useAppSelector((state) => state.dashboard.studentList);
-	useEffect(() => {
-		setStudentList(studentLists);
-	}, [studentLists]);
-
 	useEffect(() => {
 		dispatch(dashboardActions.getAllStudentStart());
 	}, []);
-	let tonggle = () => {
-		setIsOpen(!isOpen);
-	};
-	let handleDeleteStudent = (student:Student) => {
-		dispatch(dashboardActions.deleteStudentStart(student.id));
+	useEffect(() => {
+		dispatch(dashboardActions.getAllStudentStart());
+		setStudentList(studentLists);
+	}, [studentLists]);
+
+	let handleDeleteStudent = (student: Student) => {
+		dispatch(dashboardActions.deleteStudentStart(student.id as String));
 	};
 
-	let handleUpdateStudent = async (student: Student) => {
-		setIsOpen(true);
-		emitter.emit('EVENT_UPDATE_STUDENT', student);
-	};
 	return (
-		<div className="container px-6 mt-10">
-			<table className="table-auto w-full text-center">
+		<div className="container  grid grid-cols-12 mt-10">
+			<div className="flex flex-column ">
+				<NavLink to="/dashboard/news" className="px-4 py-2">
+					Tin Tức
+				</NavLink>
+				<NavLink to="dashboad/detail" className="px-4 py-2">
+					Chi tiết
+				</NavLink>
+			</div>
+			<table className="table-auto  w-full text-center col-start-2 col-span-11">
 				<thead className="border border-slate-300">
 					<tr className="py-4">
 						<th>Name</th>
 						<th>Age</th>
-						<th>Gender</th>
 						<th>Mark</th>
 						<th>Action</th>
 					</tr>
@@ -50,7 +48,6 @@ export const DashBoard = (props: DashBoardProps) => {
 								<tr className="border border-slate-300" key={index}>
 									<td>{student.name}</td>
 									<td>{student.age}</td>
-									<td>{student.gender}</td>
 									<td>{student.mark}</td>
 									<td>
 										<button
@@ -59,19 +56,18 @@ export const DashBoard = (props: DashBoardProps) => {
 										>
 											Delete
 										</button>
-										<button
+										<Link
+											to={`/dashboard/${student.id}/edit`}
 											className="px-3 border border-solid bg-yellow-500 rounded"
-											onClick={() => handleUpdateStudent(student)}
 										>
 											Update
-										</button>
+										</Link>
 									</td>
 								</tr>
 							);
 						})}
 				</tbody>
 			</table>
-			<UpdateStudent isOpen={isOpen} tonggle={tonggle} />
 		</div>
 	);
 };

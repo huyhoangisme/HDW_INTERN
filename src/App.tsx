@@ -1,30 +1,23 @@
-import { useAppSelector } from 'app/hooks';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NotFound, PrivateRoute } from 'components/common';
-import { AdminLayout } from 'components/layout';
+import { NotFound } from 'components/common';
+import DashBoardLayout from 'components/layout/DashBoardLayout';
 import { LoginPage } from 'features/auth/pages/LoginPage';
-import { useEffect } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 function App() {
-	const loginSucess = useAppSelector((state) => state.auth.isLoggedIn);
-	const accessToken = Boolean(localStorage.getItem('accessToken'));
-	const history = useHistory();
-	useEffect(() => {
-		if (loginSucess || accessToken) {
-			history.push('/admin/dashboard');
-		}
-	}, [loginSucess, accessToken]);
+
 	return (
 		<div className="App">
+			
 			<Switch>
-				<Route path="/login" exact>
+				<Route path="/" exact></Route>
+				<Route path="/login">
 					<LoginPage />
 				</Route>
-				<PrivateRoute path="/admin">
-					<AdminLayout />
-				</PrivateRoute>
-				<Route>
+				<Route path="/dashboard">
+					<DashBoardLayout />
+				</Route>
+				<Route path="*">
 					<NotFound />
 				</Route>
 			</Switch>

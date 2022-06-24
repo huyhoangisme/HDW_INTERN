@@ -16,8 +16,8 @@ const studentApi = {
 		const url = '/students';
 		return axios.post(url, { data });
 	},
-	updateStudent(id: string, data: Student): Promise<Student> {
-		const url = `/students/${id}`;
+	updateStudent(data: Student): Promise<Student> {
+		const url = `/students/${data.id}`;
 		return axios.put(url, data);
 	},
 	removeStudent(id: string) {

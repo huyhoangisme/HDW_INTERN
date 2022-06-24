@@ -17,20 +17,37 @@ function* handleGetAllStudent() {
 		yield put(dashboardActions.getAllStudentFailed);
 	}
 }
-
+function* handleGetStudentByID(action: PayloadAction<String>) {
+	try {
+		let student: Student = yield call(studentApi.getStudentById, `${action.payload}`);
+		yield put(dashboardActions.getStudentByIDSuccess(student));
+	} catch (e) {
+		yield put(dashboardActions.getStudentByIdFailed());
+	}
+}
 function* handleDeleteStudent(action: PayloadAction<String>) {
 	// call api method to delete
 	try {
 		yield call(studentApi.removeStudent, `${action.payload}`);
 		yield put(dashboardActions.deleteStudentSuccess(action.payload));
 	} catch (e) {
-		yield put(dashboardActions.deleteStudentFailed);
+		yield put(dashboardActions.deleteStudentFailed());
+	}
+}
+function* handleUpdateStudentByID(action: PayloadAction<Student>) {
+	try {
+		let student: Student = yield call(studentApi.updateStudent, action.payload);
+		yield put(dashboardActions.updateStudentByIDSuccess(student));
+	} catch (e) {
+		yield put(dashboardActions.updateStudentByIDFailed());
 	}
 }
 
 function* handleDashBoardActions() {
 	yield takeEvery(dashboardActions.getAllStudentStart.type, handleGetAllStudent);
 	yield takeEvery(dashboardActions.deleteStudentStart.type, handleDeleteStudent);
+	yield takeEvery(dashboardActions.getStudentByIDStart.type, handleGetStudentByID);
+	yield takeEvery(dashboardActions.updateStudentByIDStart.type, handleUpdateStudentByID);
 }
 export default function* dashboardSaga() {
 	yield call(handleDashBoardActions);

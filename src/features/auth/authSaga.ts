@@ -5,13 +5,7 @@ export function* handleLogin(payload: PayLoadState) {
 	try {
 		// call api login;
 		localStorage.setItem('accessToken', 'abcxyz');
-		yield put(
-			authActions.loginSucces({
-				id: 1,
-				name: 'Hoang',
-				email: 'absc',
-			})
-		);
+		
 	} catch (error:any) {
 		yield put(authActions.loginFailed(error.message));
 		return false;

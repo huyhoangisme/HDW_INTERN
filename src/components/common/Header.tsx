@@ -1,20 +1,32 @@
-import { useAppDispatch } from 'app/hooks';
-import { authActions } from 'features/auth/authSlice';
+import { AuthContext } from 'features/auth/AuthContext';
+import { useContext } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 
 export interface HeaderProps {}
 export const Header = (props: HeaderProps) => {
-	const dispatch = useAppDispatch();
+	const authContext = useContext(AuthContext)
+	let history = useHistory();
 	let handleLogout = () => {
-		dispatch(authActions.logOut());
+		authContext.logOut();
+		history.push('/login');
 	};
+
 	return (
 		<div className="bg-amber-200">
-			<div className="container flex justify-end px-6 py-2">
-				<div className="text-center text-4xl flex-1">Dashboard</div>
-				<button className="bg-blue-500 px-4" onClick={() => handleLogout()}>
+			<div className="container flex  px-10 py-2">
+				{/* <div className="text-center text-4xl flex-1">Dashboard</div> */}
+				<div className="flex-1">
+				<NavLink to="/dashboard" activeClassName="text-indigo-600" className="px-4  text-lg"
+				>Dashboard</NavLink>
+				<NavLink to="/student" activeClassName="text-indigo-600" className="px-4  text-lg">Student</NavLink>
+				<NavLink to="/contact" activeClassName="text-indigo-600" className="px-4  text-lg">Contact</NavLink>
+
+				</div>
+				<button className="bg-blue-500 px-3 py-1" onClick={() => handleLogout()}>
 					Log Out
 				</button>
 			</div>
+			
 		</div>
 	);
 };
