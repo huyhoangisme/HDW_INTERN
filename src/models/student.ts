@@ -1,4 +1,4 @@
-export interface Student {
+export interface Students {
 	
 	id?: string;
 	name?: string;
@@ -10,7 +10,7 @@ export interface Student {
 }
 export interface ListParams {
 	_page?: number;
-	_limit?: number;
+	_limits?: number;
 	_sort?: string;
 	_order?: 'desc' | 'asc';
 	[key: string]: any;

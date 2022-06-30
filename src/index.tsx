@@ -1,15 +1,18 @@
+
+import { AuthContextProvider } from 'features/auth/authContext';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { store } from './app/store';
-import {AuthContextProvider} from './features/auth/AuthContext';
+
 import './index.css';
 const renderApp = () => {
 	ReactDOM.render(
 		<Provider store={store}>
 			<BrowserRouter>
-				<AuthContextProvider>
+			{/* dung props custom api */}
+				<AuthContextProvider >
 					<App />
 				</AuthContextProvider>
 			</BrowserRouter>

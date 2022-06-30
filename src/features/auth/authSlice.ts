@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from 'models/Users';
+import { User } from 'models';
+
 export interface PayLoadState {
 	email?: string;
 	password?: string;

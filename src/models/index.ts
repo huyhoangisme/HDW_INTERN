@@ -1,4 +1,4 @@
-export *  from './common';
+export * from './common';
 export * from './city';
 export * from './student';
-export * from './Users'
+export * from './users'

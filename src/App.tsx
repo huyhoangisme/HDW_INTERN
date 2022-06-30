@@ -1,23 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NotFound } from 'components/common';
-import DashBoardLayout from 'components/layout/DashBoardLayout';
-import { LoginPage } from 'features/auth/pages/LoginPage';
+import { Header, NotFound, PrivateRoute } from 'components';
+import DashBoardLayout from 'components/DashBoardLayout';
+
+import { LoginPage } from 'layouts/LoginPage';
+import Student from 'layouts/Student';
 import { Route, Switch } from 'react-router-dom';
 
 function App() {
-
 	return (
 		<div className="App">
-			
+			<Header/>
 			<Switch>
 				<Route path="/" exact></Route>
 				<Route path="/login">
 					<LoginPage />
 				</Route>
-				<Route path="/dashboard">
+				<PrivateRoute path="/dashboard">
 					<DashBoardLayout />
-				</Route>
-				<Route path="*">
+				</PrivateRoute>
+				<PrivateRoute path="/student">
+					<Student />
+				</PrivateRoute>
+				<Route >
 					<NotFound />
 				</Route>
 			</Switch>

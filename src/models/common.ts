@@ -1,12 +1,12 @@
 
-export interface Pagination {
-    _limits:number;
+export interface PaginationValues {
+    _limit:number;
     _page:number;
     _totalRows:number;
 }
 export interface ListResponse<T> {
     data:T[] ,
-    pagination?:Pagination
+    pagination?:PaginationValues
 }
 
 export  interface FormValues{

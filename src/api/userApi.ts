@@ -10,7 +10,7 @@ export interface UserResponse {
 	message: string;
 	data: {
 		user: User;
-		accessToken: String;
+		accessToken: string;
 	};
 }
 const userApi = {

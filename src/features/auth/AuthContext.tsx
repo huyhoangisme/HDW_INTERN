@@ -1,19 +1,16 @@
 import userApi, { loginState } from 'api/userApi';
 import { User } from 'models';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type AuthContextProviderProps = {
 	children: React.ReactNode;
 };
 
-export interface AuthState {
-	accessToken: String;
-	userInfo: User;
-}
 export interface UserContext {
-	isLoggedIn: Boolean;
-	accessToken: String;
+	isLoggedIn: boolean;
+	accessToken: string;
 	userInfo: User | null;
+	loading: boolean;
 	login: (data: loginState) => void;
 	logOut: () => void;
 }
@@ -28,24 +25,31 @@ const AuthContext = createContext<UserContext>({
 		gender: 'male',
 		phone: '',
 	},
+	loading: true,
 	login: (data: loginState) => {},
 	logOut: () => {},
-	
 });
 const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-	let [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
+	let [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+	let [loading, setLoading] = useState<boolean>(true);
 	let [userInfo, setUserInfo] = useState<User | null>(null);
-	let [accessToken, setAccessToken] = useState<String>('');
+	let [accessToken, setAccessToken] = useState<string>('');
+
 	useEffect(() => {
 		const checkUserIsLogin = async () => {
 			const id = window.sessionStorage.getItem('id');
-			const { errorCode, data } = await userApi.getUserById(id as string);
+			if (!id) {
+				setLoading(false);
+				return;
+			}
+			const { errorCode, data } = await userApi.getUserById(id);
 			if (errorCode === 0) {
 				let { user, accessToken } = data;
 				setIsLoggedIn(true);
 				setUserInfo(user);
 				setAccessToken(accessToken);
-				localStorage.setItem('accessToken', accessToken as string);
+				localStorage.setItem('accessToken', accessToken);
+				setLoading(false);
 			}
 		};
 		checkUserIsLogin();
@@ -58,7 +62,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 			setIsLoggedIn(true);
 			setAccessToken(accessToken);
 			setUserInfo(user);
-			localStorage.setItem('accessToken', data.accessToken as string);
+			localStorage.setItem('accessToken', data.accessToken);
 			window.sessionStorage.setItem('id', `${data.user.id}`);
 		} else {
 			alert('Login Failed!!!');
@@ -71,14 +75,17 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 		setUserInfo(null);
 		setAccessToken('');
 	};
-	const AuthContextValue = {
+	const authContextValue = {
 		isLoggedIn,
 		accessToken,
 		userInfo,
+		loading,
 		login: handleLogin,
-		logOut: handleLogOut
+		logOut: handleLogOut,
 	};
-
-	return <AuthContext.Provider value={AuthContextValue}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 };
-export { AuthContext, AuthContextProvider };
+const useAuthContext = () => {
+	return useContext(AuthContext);
+};
+export { useAuthContext, AuthContextProvider };
