@@ -1,8 +1,5 @@
 
-export interface LogOutPageProps {
-
-}
-export const LogOutPage = (props: LogOutPageProps) => {
+export const LogOutPage = () => {
     return (
         <div>LogOut Pages</div>
     )

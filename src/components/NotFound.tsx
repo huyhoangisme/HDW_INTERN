@@ -1,8 +1,5 @@
 
-export interface NotFoundProps {
-
-}
-export const NotFound = (props: NotFoundProps) => {
+export const NotFound = () => {
     return (
         <div>Not found page</div>
     )

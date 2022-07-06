@@ -16,11 +16,12 @@ const Student = () => {
 	const studentList = useAppSelector<Students[]>(selectorStudentList);
 	const pagination = useAppSelector(selectorPagination);
 	const dispatch = useAppDispatch();
-	const currentPage = useQueryString('page');
+	const currentPage = parseInt(useQueryString('page'));
+	const currentSearchValue = useQueryString('name_like');
 	const [filters, setFilters] = useState({
 		_page: currentPage,
 		_limit: 10,
-		name_like: '',
+		name_like: currentSearchValue,
 	});
 	useEffect(() => {
 		dispatch(dashboardActions.getAllStudentStart(filters));

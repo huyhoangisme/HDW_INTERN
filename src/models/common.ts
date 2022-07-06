@@ -9,7 +9,7 @@ export interface ListResponse<T> {
     pagination?:PaginationValues
 }
 
-export  interface FormValues{
+export  interface FormInputValues{
     firstName?:string;
     lastName?:string;
     email?:string;

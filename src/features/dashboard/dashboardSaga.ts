@@ -7,7 +7,7 @@ import { dashboardActions } from './dashboardSlice';
 
 function* handleGetAllStudent(action: PayloadAction<ListParams>) {
 	try {
-		let allStudent: ListResponse<Students> = yield call(studentApi.getAllStudent, action.payload);
+		const allStudent: ListResponse<Students> = yield call(studentApi.getAllStudent, action.payload);
 		yield put(dashboardActions.getAllStudentSuccess(allStudent));
 	} catch (e) {
 		yield put(dashboardActions.getAllStudentFailed);

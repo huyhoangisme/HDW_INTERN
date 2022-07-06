@@ -3,9 +3,9 @@ import { dashboardActions, selectorStudentList } from 'features/dashboard/dashbo
 import { Students } from 'models';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Form } from 'reactstrap';
 
-export interface DashBoardProps {}
-export const DashBoard = (props: DashBoardProps) => {
+export const DashBoard = () => {
 	const dispatch = useAppDispatch();
 	const studentList = useAppSelector<Students[]>(selectorStudentList);
 	const params = {
@@ -58,6 +58,7 @@ export const DashBoard = (props: DashBoardProps) => {
 					})}
 				</tbody>
 			</table>
+			<Form />
 		</div>
 	);
 };

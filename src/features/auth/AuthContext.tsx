@@ -26,14 +26,18 @@ const AuthContext = createContext<UserContext>({
 		phone: '',
 	},
 	loading: true,
-	login: (data: loginState) => {},
-	logOut: () => {},
+	login: (data: loginState) => {
+		// empty
+	},
+	logOut: () => {
+		// empty
+	},
 });
 const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-	let [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-	let [loading, setLoading] = useState<boolean>(true);
-	let [userInfo, setUserInfo] = useState<User | null>(null);
-	let [accessToken, setAccessToken] = useState<string>('');
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [userInfo, setUserInfo] = useState<User | null>(null);
+	const [accessToken, setAccessToken] = useState<string>('');
 
 	useEffect(() => {
 		const checkUserIsLogin = async () => {
@@ -44,7 +48,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 			}
 			const { errorCode, data } = await userApi.getUserById(id);
 			if (errorCode === 0) {
-				let { user, accessToken } = data;
+				const { user, accessToken } = data;
 				setIsLoggedIn(true);
 				setUserInfo(user);
 				setAccessToken(accessToken);
@@ -56,9 +60,9 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 	}, []);
 
 	const handleLogin = async (dataLogin: loginState) => {
-		let { errorCode, data } = await userApi.login(dataLogin);
+		const { errorCode, data } = await userApi.login(dataLogin);
 		if (errorCode === 0) {
-			let { user, accessToken } = data;
+			const { user, accessToken } = data;
 			setIsLoggedIn(true);
 			setAccessToken(accessToken);
 			setUserInfo(user);

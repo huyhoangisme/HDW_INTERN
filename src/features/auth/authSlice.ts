@@ -29,7 +29,7 @@ export const authSlice = createSlice({
 			state.logging = false;
 			state.userInfo = actions.payload;
 		},
-		loginFailed(state, actions: PayloadAction<String>) {
+		loginFailed(state, actions: PayloadAction<string>) {
 			state.isLoggedIn = false;
 			state.logging = false;
 		},
